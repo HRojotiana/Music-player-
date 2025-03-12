@@ -16,6 +16,8 @@ import Animated, {
   FadeOut,
   Layout,
 } from 'react-native-reanimated';
+import { formatDuration } from '@/helpers/utils';
+import { fetchAudioFiles } from '@/helpers/fetch';
 
 const { width } = Dimensions.get('window');
 
@@ -37,23 +39,9 @@ export const AudioListScreen = () => {
     setPermissionStatus(status);
     
     if (status === 'granted') {
-      fetchAudioFiles();
+      fetchAudioFiles().then(setAudioFiles);
+      
     }
-  };
-
-  const fetchAudioFiles = async () => {
-    const media = await MediaLibrary.getAssetsAsync({
-      mediaType: MediaLibrary.MediaType.audio,
-      first: 300,
-    });
-
-    setAudioFiles(media.assets);
-  };
-
-  const formatDuration = (duration: number) => {
-    const minutes = Math.floor(duration / 60);
-    const seconds = Math.floor(duration % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const renderAudioItem = ({ item, index }: { item: MediaLibrary.Asset; index: number }) => (
@@ -64,6 +52,7 @@ export const AudioListScreen = () => {
     >
       <TouchableOpacity
         style={styles.audioItem}
+        
         onPress={() => console.log('Audio selected:', item.filename)}
       >
         <View style={styles.iconContainer}>
@@ -76,6 +65,7 @@ export const AudioListScreen = () => {
           <Text style={styles.duration}>
             {formatDuration(item.duration)}
           </Text>
+          <Text>{item.albumId}</Text>
         </View>
       </TouchableOpacity>
     </Animated.View>
