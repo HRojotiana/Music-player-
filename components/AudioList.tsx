@@ -17,8 +17,8 @@ import Animated, {
   Layout,
 } from 'react-native-reanimated';
 import { formatDuration } from '@/helpers/utils';
-import { fetchAudioFiles } from '@/helpers/fetch';
 import { useRouter } from 'expo-router';
+import { fetchAudioFiles } from '@/helpers/fetch';
 const { width } = Dimensions.get('window');
 
 export const AudioListScreen = () => {
