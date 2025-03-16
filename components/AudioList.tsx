@@ -16,11 +16,11 @@ import BackgroundAudioPlayer from './BackgroundPlay';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 const { width } = Dimensions.get('window');
 import AudioItem from './AudioItem';
+import useAudioStore from '@/store/AudioStore';
 
 export const AudioListScreen = () => {
-  const [audioFiles, setAudioFiles] = useState<MediaLibrary.Asset[]>([]);
   const [permissionStatus, setPermissionStatus] = useState<MediaLibrary.PermissionStatus | 'web' | null>(null);
-
+  const {setDefaultPlaylist,defaultPlaylist}=useAudioStore()
 ;  const router=useRouter();
   useEffect(() => {
     requestPermission();
@@ -35,7 +35,8 @@ export const AudioListScreen = () => {
     const { status } = await MediaLibrary.requestPermissionsAsync();
     setPermissionStatus(status);
     
-      fetchAudioFiles().then(setAudioFiles);
+      fetchAudioFiles().then(setDefaultPlaylist);
+      
       
     
   };
@@ -83,9 +84,9 @@ export const AudioListScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Audio Library</Text>
+        <Text style={styles.title}>Audio Library a</Text>
           <Text style={styles.subtitle}>
-            {audioFiles.length} audio files found
+            {defaultPlaylist.length} audio files found
           </Text>
       </View>
 
@@ -93,7 +94,7 @@ export const AudioListScreen = () => {
       {permissionStatus === 'web' && renderWebPlatformMessage()}
       
         <FlatList
-          data={audioFiles}
+          data={defaultPlaylist}
           keyExtractor={(item) => item.id}
           renderItem={renderAudioItem}
           ListEmptyComponent={renderEmptyState}
