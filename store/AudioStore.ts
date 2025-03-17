@@ -21,8 +21,8 @@ interface AudioState {
   playAudio: () => Promise<void>;
   pauseAudio: () => Promise<void>;
   stopAudio: () => Promise<void>;
-  nextAudio: () => Promise<void>;
-  prevAudio: () => Promise<void>;
+  nextAudio: () => Promise<string | undefined>;
+  prevAudio: () => Promise<string | undefined>;
 }
 
 const useAudioStore = create<AudioState>((set, get) => ({
@@ -117,11 +117,14 @@ const useAudioStore = create<AudioState>((set, get) => ({
 
     const nextIndex = (currentIndex + 1) % playlist.length;
     const nextTrack = playlist[nextIndex];
-
+   
+    
     await get().loadAudio(nextTrack.uri, nextTrack.filename);
+     
     set({ currentIndex: nextIndex ,nextAudioId:nextTrack.id});
   
     await get().playAudio();
+    return nextTrack.id;
   },
 
   prevAudio: async () => {
@@ -141,6 +144,7 @@ const useAudioStore = create<AudioState>((set, get) => ({
     });
    
     await get().playAudio();
+    return prevTrack.id
   },
 }));
 

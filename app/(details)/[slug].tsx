@@ -16,7 +16,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function AudioDetailsScreen() {
   const { slug } = useLocalSearchParams();
-  const { nextAudioId, prevAudioId, nextAudio, prevAudio } = useAudioStore();
+  const {  stopAudio,nextAudio, prevAudio } = useAudioStore();
   const [metadata, setMetadata] = useState<Metadata>();
   const [audio, setAudio] = useState<MediaLibrary.Asset | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -49,18 +49,27 @@ export default function AudioDetailsScreen() {
 
 
   const handlePrevious = () => {
-   prevAudio()
+   prevAudio().then(id=>{
+      if(id){
+        console.log(id);
+        
+        router.replace(`/(details)/${id}`)
+      }
+   })
   };
 
   const handleStop = () => {
-    // Implement stop functionality
-    alert("Stop functionality to be implemented");
+    stopAudio();
   };
 
   const handleNext = () => {
-   nextAudio()
-   router.replace(`/(details)/${nextAudioId}`)
-   console.log("next audio id ",nextAudioId);
+   nextAudio().then(id=>{
+      if(id){
+        console.log(id);
+        
+        router.replace(`/(details)/${id}`)
+      }
+   })
    
    
   };

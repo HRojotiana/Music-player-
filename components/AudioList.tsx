@@ -84,7 +84,7 @@ export const AudioListScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Audio Library a</Text>
+        <Text style={styles.title}>Audio Library</Text>
           <Text style={styles.subtitle}>
             {defaultPlaylist.length} audio files found
           </Text>
