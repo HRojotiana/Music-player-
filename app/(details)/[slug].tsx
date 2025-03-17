@@ -10,6 +10,7 @@ import { getAudioById } from "@/helpers/fetch";
 import { useRouter } from "expo-router";
 import useAudioStore from "@/store/AudioStore";
 import * as MediaLibrary from "expo-media-library";
+import ProgressBar from "@/components/ProgressBar";
 
 const DEFAULT_COVER = "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3";
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -53,7 +54,7 @@ export default function AudioDetailsScreen() {
       if(id){
         console.log(id);
         
-        router.replace(`/(details)/${id}`)
+        
       }
    })
   };
@@ -66,8 +67,7 @@ export default function AudioDetailsScreen() {
    nextAudio().then(id=>{
       if(id){
         console.log(id);
-        
-        router.replace(`/(details)/${id}`)
+       
       }
    })
    
@@ -119,7 +119,7 @@ export default function AudioDetailsScreen() {
             </View>
           </View>
         </View>
-
+        <ProgressBar/>
         <View style={styles.controlsContainer}>
           <TouchableOpacity 
             onPress={handlePrevious} 
