@@ -20,7 +20,7 @@ import useAudioStore from '@/store/AudioStore';
 
 export const AudioListScreen = () => {
   const [permissionStatus, setPermissionStatus] = useState<MediaLibrary.PermissionStatus | 'web' | null>(null);
-  const {setDefaultPlaylist,defaultPlaylist}=useAudioStore()
+  const {setDefaultPlaylist,defaultPlaylist,togglePlaylistMode}=useAudioStore()
 ;  const router=useRouter();
   useEffect(() => {
     requestPermission();
@@ -34,8 +34,14 @@ export const AudioListScreen = () => {
 
     const { status } = await MediaLibrary.requestPermissionsAsync();
     setPermissionStatus(status);
-    
-      fetchAudioFiles().then(setDefaultPlaylist);
+       // Récupérer les fichiers audio AVANT de changer le mode
+  const playlist = await fetchAudioFiles();
+
+  setDefaultPlaylist(playlist);
+    // Attendre un petit délai pour garantir la mise à jour
+  setTimeout(() => {
+    togglePlaylistMode(false);
+  }, 100); // Attente courte pour éviter un appel trop tôt
       
       
     

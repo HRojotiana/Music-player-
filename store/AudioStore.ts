@@ -16,7 +16,7 @@ interface AudioState {
   prevAudioId: string | null;
   setDefaultPlaylist: (tracks: MediaLibrary.Asset[]) => void;
   setCustomPlaylist: (tracks: MediaLibrary.Asset[]) => void;
-  togglePlaylistMode: () => void;
+  togglePlaylistMode: (mode:boolean) => void;
   loadAudio: (uri: string, title: string) => Promise<void>;
   playAudio: () => Promise<void>;
   pauseAudio: () => Promise<void>;
@@ -47,9 +47,9 @@ const useAudioStore = create<AudioState>((set, get) => ({
     if (get().isCustomMode) set({ currentIndex: 0 });
   },
 
-  togglePlaylistMode: () => {
+  togglePlaylistMode: (mode) => {
     const { isCustomMode, customPlaylist, defaultPlaylist } = get();
-    const newMode = !isCustomMode;
+    const newMode = mode !== undefined ? mode : !isCustomMode;
     const newPlaylist = newMode ? customPlaylist : defaultPlaylist;
 
     set({
