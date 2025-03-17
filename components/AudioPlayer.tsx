@@ -5,6 +5,7 @@ import { updateNotification } from "@/services/NotificationService";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+
 interface AudioPlayerProps {
     uri: string;
     currentTitle: string;
