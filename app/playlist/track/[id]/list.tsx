@@ -27,7 +27,7 @@ export default function PlaylistDetail() {
   };
 
   const renderTrackItem = ({ item }: { item: Track }) => (
-   <AudioItem index={item.duration} item={item} isItInPlayList={true} onDelete={() => removeTrackFromPlaylist(playListId, item.id)} uri={""} currentTitle={""}/>
+   <AudioItem index={item.duration} item={item} isItInPlayList={true} onDelete={() => removeTrackFromPlaylist(playListId, item.id)} uri={item.uri} currentTitle={item.filename}/>
   );
 
   return (
