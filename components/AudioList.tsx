@@ -20,7 +20,6 @@ import AudioItem from './AudioItem';
 import useAudioStore from '@/store/AudioStore';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import FloatPlayer from './FloatPlayer';
 
 export const AudioListScreen = () => {
   const [permissionStatus, setPermissionStatus] = useState<MediaLibrary.PermissionStatus | 'web' | null>(null);

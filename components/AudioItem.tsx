@@ -3,11 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert, Image, Dimensions } fr
 import { useRouter } from 'expo-router';
 import AudioPlayer from './AudioPlayer';
 import { formatDuration } from '@/helpers/utils';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { FontAwesome6 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInRight } from 'react-native-reanimated';
+import { THEME_COLOR,THEME_COLOR_LIGHT } from '@/helpers/BaseColor';
 
 const { width } = Dimensions.get('window');
+
+// Orange/red theme color
+
 
 type AudioItemProps = {
   item: Track;
@@ -51,9 +55,14 @@ const AudioItem = ({ item, index, isItInPlayList, onDelete }: AudioItemProps) =>
     );
   };
 
+  const ContentWrapper = isItInPlayList ? View : Animated.View;
+  const animationProps = isItInPlayList ? {} : {
+    entering: FadeInRight.delay(index * 100).springify()
+  };
+
   return (
-    <Animated.View
-      entering={FadeInRight.delay(index * 100).springify()}
+    <ContentWrapper
+      {...animationProps}
       style={styles.audioItem}
     >
       <TouchableOpacity onPress={handlePress} style={styles.touchable}>
@@ -70,10 +79,10 @@ const AudioItem = ({ item, index, isItInPlayList, onDelete }: AudioItemProps) =>
                 style={styles.albumArt}
               />
               <LinearGradient
-                colors={['rgba(139, 92, 246, 0.9)', 'rgba(139, 92, 246, 0.7)']}
+                colors={[`${THEME_COLOR}CC`, `${THEME_COLOR}B3`]}
                 style={styles.playIconOverlay}
               >
-                <Icon name="compact-disc" size={24} color="#FFFFFF" style={styles.spinningIcon} />
+                <FontAwesome6 name="compact-disc" size={24} color="#FFFFFF" style={styles.spinningIcon} />
               </LinearGradient>
             </View>
             
@@ -96,7 +105,7 @@ const AudioItem = ({ item, index, isItInPlayList, onDelete }: AudioItemProps) =>
                     colors={['rgba(239, 68, 68, 0.2)', 'rgba(239, 68, 68, 0.1)']}
                     style={styles.deleteButtonGradient}
                   >
-                    <Icon name="trash-can" size={16} color="#EF4444" />
+                    <FontAwesome6 name="trash-can" size={16} color="#EF4444" />
                   </LinearGradient>
                 </TouchableOpacity>
               )}
@@ -104,7 +113,7 @@ const AudioItem = ({ item, index, isItInPlayList, onDelete }: AudioItemProps) =>
           </View>
         </LinearGradient>
       </TouchableOpacity>
-    </Animated.View>
+    </ContentWrapper>
   );
 };
 
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 20,
     overflow: 'hidden',
-    shadowColor: '#8B5CF6',
+    shadowColor: THEME_COLOR,
     shadowOffset: {
       width: 0,
       height: 8,
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(139, 92, 246, 0.3)',
+    borderColor: THEME_COLOR_LIGHT,
     backgroundColor: 'rgba(17, 24, 39, 0.95)',
   },
   mainContent: {
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
   durationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(139, 92, 246, 0.15)',
+    backgroundColor: THEME_COLOR_LIGHT,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
@@ -204,12 +213,12 @@ const styles = StyleSheet.create({
   divider: {
     width: 1,
     height: 12,
-    backgroundColor: 'rgba(139, 92, 246, 0.3)',
+    backgroundColor: THEME_COLOR_LIGHT,
   },
   formatContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(139, 92, 246, 0.15)',
+    backgroundColor: THEME_COLOR_LIGHT,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
